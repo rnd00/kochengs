@@ -18,7 +18,7 @@ func check(e error) {
 }
 
 // ThisCatDoesNotExist -- pull image from that site
-func ThisCatDoesNotExist() {
+func ThisCatDoesNotExist(c chan string) {
 	r, e := http.Get("https://thiscatdoesnotexist.com")
 	check(e)
 	defer r.Body.Close()
@@ -35,5 +35,6 @@ func ThisCatDoesNotExist() {
 	defer o.Close()
 	io.Copy(o, r.Body)
 
-	log.Info().Msgf("%s created", n)
+	// log.Info().Msgf("%s created", n)
+	c <- fmt.Sprintf("%s created", n)
 }
